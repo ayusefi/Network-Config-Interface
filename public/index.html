@@ -16,15 +16,27 @@
           <th>Eth1</th>
         </tr>
         <tr>
-          <td><label for="chkPassport">
-            <input type="checkbox" id="eth0-checkbox" onclick="ShowHideDiv(this)" />
+          <td>
+            <label>
+            <input type="checkbox" id="eth0-checkbox" onclick="ShowHideDiveth0(this)" />
             Enabled
-        </label></td>
+            </label>
+          </td>
+          <td>
+            <input type="checkbox" id="eth1-checkbox" onclick="ShowHideDiveth1(this)" />
+            Enabled
+            </label>
+          </td>
         </tr>
         <tr>
           <td>
             <div id="eth0-dhcp-div" style="display: none">
-              <input type="checkbox" id="eth0-dhcp" onclick="ShowHideDiv2(this)" checked/>DHCP Active
+              <input type="checkbox" id="eth0-dhcp" onclick="ShowHideDiveth02(this)" checked/>DHCP Active
+          </div>
+          </td>
+          <td>
+            <div id="eth1-dhcp-div" style="display: none">
+              <input type="checkbox" id="eth1-dhcp" onclick="ShowHideDiveth12(this)" checked/>DHCP Active
           </div>
           </td>
         </tr>
@@ -40,61 +52,80 @@
                 <input type="text" id="eth0-gate-way" /><br>
                 <label>DNS Server:</label>
                 <input type="text" id="eth0-dns-server" /><br>
-                <input type="submit" value="Submit">              
+                <input type="submit" value="Save to File">              
+              </form>
+            </div>
+          </td>
+          <td>
+            <div id="eth1-dhcp-deactive-div" style="display: none">
+              <form id="eth1form">
+                <label>IP Address:</label>
+                <input type="text" id="eth1-ip-address" /><br>
+                <label>Netmask</label>
+                <input type="text" id="eth1-net-mask" /><br>
+                <label>Gateway:</label>
+                <input type="text" id="eth1-gate-way" /><br>
+                <label>DNS Server:</label>
+                <input type="text" id="eth1-dns-server" /><br>
+                <input type="submit" value="Save to file">              
               </form>
             </div>
           </td>
         </tr>
         <tr>
           <td id="message-eth0save" style="color:green"></td>
+          <td id="message-eth1save" style="color:green"></td>
         </tr>
-
-        
-        <!-- <td>
-          <button id="myButton">Interfaces</button>
-        </td> -->
-        <!-- <td>
-          <button id="kayit">Save</button>
-        </td> -->
-        <!-- <td id="message-save" style="color:green"></td> -->
 
     </table>
-    <!-- <table>
-        <tr>
-            <th>Interface Name</th>
-            <td id="message-1"></td>
-        </tr>
-        <tr>
-            <th>IP Address</th>
-            <td id="message-2"></td>
-        </tr>
-        <tr>
-            <th>MAC Address</th>
-            <td id="message-3"></td>
-        </tr>
-        <tr>
-            <th>Gateway IP</th>
-            <td id="message-4"></td>
-        </tr>
-        <tr>
-            <th>Type</th>
-            <td id="message-5"></td>
-        </tr>
 
-    </table> -->
+    <table>
+      <tr>
+        <th>Available Wifi Networks</th>
+      </tr>
+      <tr>
+        <td>
+          <label>
+          <input type="checkbox" id="wifis-checkbox" onclick="ShowHideDivwifi(this)" />
+          Enabled
+          </label>
+        </td>
+      </tr>
+      <tr>
+        <td id="message-availwifis">
+          <ul id="wifi-div" style="display: none"></ul>
+        </td>
+      </tr>
+    </table>
 
   </body>
   <script src="client.js"></script>
   <script>
-    function ShowHideDiv(eth0checkbox) {
+    function ShowHideDiveth0(eth0checkbox) {
         var eth0dhcp = document.getElementById("eth0-dhcp-div");
         eth0dhcp.style.display = eth0checkbox.checked ? "block" : "none";
     }
 
-    function ShowHideDiv2(eth0dhcpcheckbox) {
+    function ShowHideDiveth1(eth1checkbox) {
+        var eth1dhcp = document.getElementById("eth1-dhcp-div");
+        eth1dhcp.style.display = eth1checkbox.checked ? "block" : "none";
+    }
+
+    function ShowHideDiveth02(eth0dhcpcheckbox) {
       var eth0dhcpdeactive = document.getElementById("eth0-dhcp-deactive-div");
       eth0dhcpdeactive.style.display = eth0dhcpcheckbox.checked ? "none" : "block";
 
+    }
+
+    function ShowHideDiveth12(eth1dhcpcheckbox) {
+      var eth1dhcpdeactive = document.getElementById("eth1-dhcp-deactive-div");
+      eth1dhcpdeactive.style.display = eth1dhcpcheckbox.checked ? "none" : "block";
+
+    }
+
+    function ShowHideDivwifi(wificheckbox) {
+        var availwifi = document.getElementById("wifi-div");
+        availwifi.style.display = wificheckbox.checked ? "block" : "none";
     }
     </script>
 </html>

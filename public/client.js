@@ -4,47 +4,18 @@ const eth0IP = document.querySelector('#eth0-ip-address')
 const eth0Netmask = document.querySelector('#eth0-net-mask')
 const eth0Gateway = document.querySelector('#eth0-gate-way')
 const eth0DNS = document.querySelector("#eth0-dns-server")
-const messageThree = document.querySelector('#message-3')
-const messageFour = document.querySelector('#message-4')
-const messageFive = document.querySelector('#message-5')
-const messageSave = document.querySelector('#message-save')
 const messageEth0Save = document.querySelector('#message-eth0save')
 
-// button.addEventListener('click', function(e) {
-//     e.preventDefault()
+const eth1Form = document.querySelector('#eth1form');
+const eth1IP = document.querySelector('#eth1-ip-address')
+const eth1Netmask = document.querySelector('#eth1-net-mask')
+const eth1Gateway = document.querySelector('#eth1-gate-way')
+const eth1DNS = document.querySelector("#eth1-dns-server")
+const messageEth1Save = document.querySelector('#message-eth1save')
 
-//     messageOne.textContent = 'Loading...'
-//     messageTwo.textContent = ''
-//     messageThree.textContent = ''
-//     messageFour.textContent = ''
-//     messageFive.textContent = ''
+const availwifis = document.querySelector('#wifis-checkbox')
+var messageAvailWifis = document.querySelector('#wifi-div');
 
-//     fetch('/interface?int=wlo1').then((response) => {
-//         response.json().then((data) => {
-//             if (data.error) {
-//                 messageOne.textContent = data.error
-//             } else {
-//                 messageOne.textContent = data[0].name
-//                 messageTwo.textContent = data[0].ip_address
-//                 messageThree.textContent = data[0].mac_address
-//                 messageFour.textContent = data[0].gateway_ip
-//                 messageFive.textContent = data[0].type
-
-//             }
-//         })
-
-//     })
-
-// });
-
-// buttonkayit.addEventListener('click', function(e) {
-//     e.preventDefault()
-
-//     messageSave.textContent = 'Information Saved!'
-    
-//     fetch('/save').then((response) => {
-//     })
-// })
 
 eth0Form.addEventListener('click', function(e) {
     e.preventDefault()
@@ -63,4 +34,43 @@ eth0Form.addEventListener('click', function(e) {
             }
         })
     })
+})
+
+eth1Form.addEventListener('click', function(e) {
+    e.preventDefault()
+    IP_Address = eth1IP.value
+    Net_mask = eth1Netmask.value
+    Gateway = eth1Gateway.value
+    DNS = eth1DNS.value
+    messageEth1Save.textContent = ''
+
+    fetch('/eth1save?ip=' + IP_Address + '&netmask=' + Net_mask + '&gateway=' + Gateway + '&dns=' + DNS).then((response) => {
+        response.json().then((data) => {
+            if (data.error) {
+                messageEth1Save.textContent = data.error
+            } else {
+                messageEth1Save.textContent = 'Information saved to file!'
+            }
+        })
+    })
+})
+
+availwifis.addEventListener('change', function() {
+    messageAvailWifis.textContent = ''
+
+    if (this.checked) {
+        fetch('/availwifis').then((response) => {
+            response.json().then((data) => {
+                if (data.error) {
+                    messageAvailWifis.textContent = data.error
+                } else {
+                    data.forEach(function(value) {
+                        console.log(value.ssid)
+                        messageAvailWifis.textContent = value.ssid
+                    })
+                }
+            })
+        })
+    }
+
 })
