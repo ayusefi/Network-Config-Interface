@@ -57,7 +57,6 @@ eth1Form.addEventListener('click', function(e) {
 
 availwifis.addEventListener('change', function() {
     messageAvailWifis.textContent = ''
-
     if (this.checked) {
         fetch('/availwifis').then((response) => {
             response.json().then((data) => {
@@ -65,9 +64,12 @@ availwifis.addEventListener('change', function() {
                     messageAvailWifis.textContent = data.error
                 } else {
                     data.forEach(function(value) {
-                        console.log(value.ssid)
-                        messageAvailWifis.textContent = value.ssid
+                        var node = document.createElement("LI");
+                        var nodetext = document.createTextNode(value.ssid)
+                        node.appendChild(nodetext)
+                        messageAvailWifis.appendChild(document.getElementById("wifi-div").appendChild(node))
                     })
+
                 }
             })
         })

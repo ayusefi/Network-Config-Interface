@@ -20,6 +20,7 @@ app.get('/', (req, res) => {
 
 });
 
+// Save eth0 to interface_eth0.txt file
 app.get('/eth0save', (req, res) => {
   if (!req.query.ip) {
     return res.send({
@@ -50,6 +51,7 @@ app.get('/eth0save', (req, res) => {
   })
 })
 
+// Save eth1 data into interface_eth1.txt file!
 app.get('/eth1save', (req, res) => {
   if (!req.query.ip) {
     return res.send({
@@ -80,6 +82,7 @@ app.get('/eth1save', (req, res) => {
   })
 })
 
+// List available Wifi networks
 app.get('/availwifis', (req, res) => {
   scanner.scan((err, networks) => {
     if (err) {
