@@ -1,3 +1,1 @@
-Interface,IP_Address,MAC_Address,Gateway,Type
-enp0s3,10.0.2.15,08:00:27:ad:25:1c,10.0.2.2,Wired
-wlo1,10.10.10.160,60:f2:62:8b:69:51,10.10.10.1,Wireless
+Interface,IP_Address,Subnet_Mask,MAC_Address,Gateway,DNS_Server,Type

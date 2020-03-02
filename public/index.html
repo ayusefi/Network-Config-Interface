@@ -8,19 +8,58 @@
   <body>
     <h1>Network Interfaces</h1>
     <p id="counter"></p>
+    
     <table id="ButtonsTable">
-      <tr>
-        <th>
+        
+        <tr>
+          <th>Eth0</th>
+          <th>Eth1</th>
+        </tr>
+        <tr>
+          <td><label for="chkPassport">
+            <input type="checkbox" id="eth0-checkbox" onclick="ShowHideDiv(this)" />
+            Enabled
+        </label></td>
+        </tr>
+        <tr>
+          <td>
+            <div id="eth0-dhcp-div" style="display: none">
+              <input type="checkbox" id="eth0-dhcp" onclick="ShowHideDiv2(this)" checked/>DHCP Active
+          </div>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <div id="eth0-dhcp-deactive-div" style="display: none">
+              <form id="eth0form">
+                <label>IP Address:</label>
+                <input type="text" id="eth0-ip-address" /><br>
+                <label>Netmask</label>
+                <input type="text" id="eth0-net-mask" /><br>
+                <label>Gateway:</label>
+                <input type="text" id="eth0-gate-way" /><br>
+                <label>DNS Server:</label>
+                <input type="text" id="eth0-dns-server" /><br>
+                <input type="submit" value="Submit">              
+              </form>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td id="message-eth0save" style="color:green"></td>
+        </tr>
+
+        
+        <!-- <td>
           <button id="myButton">Interfaces</button>
-        </th>
-        <th>
+        </td> -->
+        <!-- <td>
           <button id="kayit">Save</button>
-        </th>
-        <td id="message-save" style="color:green"></td>
-      </tr>
+        </td> -->
+        <!-- <td id="message-save" style="color:green"></td> -->
 
     </table>
-    <table>
+    <!-- <table>
         <tr>
             <th>Interface Name</th>
             <td id="message-1"></td>
@@ -42,8 +81,20 @@
             <td id="message-5"></td>
         </tr>
 
-    </table>
+    </table> -->
 
   </body>
   <script src="client.js"></script>
+  <script>
+    function ShowHideDiv(eth0checkbox) {
+        var eth0dhcp = document.getElementById("eth0-dhcp-div");
+        eth0dhcp.style.display = eth0checkbox.checked ? "block" : "none";
+    }
+
+    function ShowHideDiv2(eth0dhcpcheckbox) {
+      var eth0dhcpdeactive = document.getElementById("eth0-dhcp-deactive-div");
+      eth0dhcpdeactive.style.display = eth0dhcpcheckbox.checked ? "none" : "block";
+
+    }
+    </script>
 </html>
