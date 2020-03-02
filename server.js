@@ -1,9 +1,9 @@
 
+// Import needed modules
 const network = require('network');
 const express = require('express');
 const fs = require('fs');
 const scanner = require('node-wifi-scanner');
-
 const app = express();
 
 // serve files from the public directory
