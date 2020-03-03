@@ -3,12 +3,12 @@
 
   <head>
     <meta charset="utf-8">
-    <title>Network Interfaces</title>
+    <title>Network Configuration Interface</title>
     <link rel="stylesheet" href="/css/styles.css">
   </head>
 
   <body>
-    <h1>Network Interfaces</h1>
+    <h1>Network Config Interface</h1>
     <p id="counter"></p>
 
     <table id="ButtonsTable">
@@ -112,6 +112,7 @@
 
   </body>
 
+  <!-- Scripts -->
   <script src="client.js"></script>
 
   <script>
@@ -128,13 +129,11 @@
     function ShowHideDiveth02(eth0dhcpcheckbox) {
       var eth0dhcpdeactive = document.getElementById("eth0-dhcp-deactive-div");
       eth0dhcpdeactive.style.display = eth0dhcpcheckbox.checked ? "none" : "block";
-
     }
 
     function ShowHideDiveth12(eth1dhcpcheckbox) {
       var eth1dhcpdeactive = document.getElementById("eth1-dhcp-deactive-div");
       eth1dhcpdeactive.style.display = eth1dhcpcheckbox.checked ? "none" : "block";
-
     }
 
     function ShowHideDivwifi(wificheckbox) {
