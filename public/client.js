@@ -66,13 +66,13 @@ availwifis.addEventListener('change', function(e) {
     e.preventDefault()
 
     messageAvailWifis.textContent = ''
-
     if (this.checked) {
         fetch('/availwifis').then((response) => {
             response.json().then((data) => {
                 if (data.error) {
                     messageAvailWifis.textContent = data.error
                 } else {
+                    data = removeDuplicates(data, 'ssid')
                     data.forEach(function(value) {
                         var radiohtml = createRadioElement(value.ssid, false)
                         messageAvailWifis.appendChild(radiohtml)
@@ -90,8 +90,18 @@ function createRadioElement(name, checked) {
     if ( checked ) {
         radioHtml += ' checked="checked"'
     }
-    radioHtml += '/><label>' + name + '</label><br />'
+    radioHtml += '/><label for="' + name + '">' + name + '</label>'
     var radioFragment = document.createElement('div')
     radioFragment.innerHTML = radioHtml
     return radioFragment
+}
+
+// Removes duplicate and empty SSIDs from JSON object based on given key
+function removeDuplicates(array, key) {
+    return array.reduce((accumulator, element) => {
+        if (!accumulator.find(el => el[key] === element[key]) && element[key] !== '') {
+          accumulator.push(element);
+        }
+        return accumulator;
+      }, []);
 }

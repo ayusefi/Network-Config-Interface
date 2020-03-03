@@ -65,8 +65,11 @@ button:hover {
   }
 
 th {
-    text-align: left;
-    padding: 8px;
+	background-color: #f79646;
+	color: #fff;
+	font-size: x-large;
+	font-weight: bold;
+	letter-spacing: .1em;
 }
 
 /* The container */
@@ -150,4 +153,37 @@ th {
   }
 .container label {
     width: 50%;
+}
+
+.radio-toolbar {
+    margin: 10px;
+}
+
+.radio-toolbar input[type="radio"] {
+opacity: 0;
+position: fixed;
+width: 0;
+}
+
+.radio-toolbar label {
+    display: inline-block;
+    background-color: #ddd;
+    padding: 10px 20px;
+    font-family: sans-serif, Arial;
+    font-size: 16px;
+    border: 2px solid #444;
+    border-radius: 4px;
+}
+
+.radio-toolbar label:hover {
+background-color: #dfd;
+}
+
+.radio-toolbar input[type="radio"]:focus + label {
+    border: 2px dashed #444;
+}
+
+.radio-toolbar input[type="radio"]:checked + label {
+    background-color: #bfb;
+    border-color: #4c4;
 }
