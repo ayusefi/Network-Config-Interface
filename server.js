@@ -6,6 +6,9 @@ const fs = require('fs');
 const scanner = require('node-wifi-scanner');
 const app = express();
 
+const cmd = require('node-cmd');
+
+
 // serve files from the public directory
 app.use(express.static('public'));
 
@@ -17,7 +20,6 @@ app.listen(8080, () => {
 // serve the homepage
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
-
 });
 
 // Save eth0 to interface_eth0.txt file
@@ -42,7 +44,7 @@ app.get('/eth0save', (req, res) => {
   fs.readFile('interfaces.txt', function (err, data) {
     if (err) throw err;
 
-    fs.appendFileSync('interface_eth0.txt', 'Eth0' + ',' + req.query.ip + ',' + req.query.netmask + ',' + 'mac_address' + ',' + req.query.gateway + ',' + req.query.dns + ',' + 'Wired' + '\n')
+    fs.writeFileSync('interface_eth0.txt', 'Eth0' + ',' + req.query.ip + ',' + req.query.netmask + ',' + 'mac_address' + ',' + req.query.gateway + ',' + req.query.dns + ',' + 'Wired' + '\n')
   })
 
   res.send({
@@ -72,7 +74,7 @@ app.get('/eth1save', (req, res) => {
   fs.readFile('interfaces.txt', function (err, data) {
     if (err) throw err;
 
-    fs.appendFileSync('interface_eth1.txt', 'Eth1' + ',' + req.query.ip + ',' + req.query.netmask + ',' + 'mac_address' + ',' + req.query.gateway + ',' + req.query.dns + ',' + 'Wired' + '\n')
+    fs.writeFileSync('interface_eth1.txt', 'Eth1' + ',' + req.query.ip + ',' + req.query.netmask + ',' + 'mac_address' + ',' + req.query.gateway + ',' + req.query.dns + ',' + 'Wired' + '\n')
   })
   res.send({
     IP: req.query.ip
@@ -89,3 +91,22 @@ app.get('/availwifis', (req, res) => {
     res.send(networks)
   });
 })
+
+// Restart Network with given configuration
+app.get('/restNet', (req, res) => {
+  if (!req.query.ssid) {
+    return res.send({
+      error: 'You must choose a network!'
+    })
+  }
+  cmd.get(
+    'nmcli d wifi connect ' + req.query.ssid + ' password 81eedaf3CC',
+    function(err, data, stderr){
+      console.log(data)
+      res.send({
+        respond: data
+      })
+    }
+  );
+})
+

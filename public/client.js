@@ -19,6 +19,10 @@ const messageEth1Save = document.querySelector('#message-eth1save')
 const availwifis = document.querySelector('#wifis-checkbox')
 var messageAvailWifis = document.querySelector('#wifi-div');
 
+// Variables for Restaring Network
+const restButton = document.querySelector("#ResetButton")
+const messageRestNet = document.querySelector('#message-restNet')
+
 // Button event handler for saving eth0 interface into interface_eth0.txt file
 eth0Form.addEventListener('click', function(e) {
     e.preventDefault()
@@ -84,6 +88,35 @@ availwifis.addEventListener('change', function(e) {
     }
 })
 
+
+restButton.addEventListener('click', function(e) {
+    e.preventDefault()
+
+    messageRestNet.textContent = ''
+
+    const checkedRadio = display()
+
+    if (checkedRadio == null) {
+        messageRestNet.textContent = 'You must choose a network!'
+    }
+
+    fetch('/restNet?ssid=' + checkedRadio.id).then((response) => {
+        response.json().then((data) => {
+            if (data.error) {
+                messageRestNet.textContent = data.error
+            } else {
+                if (data.respond[0] !== '') {
+                    messageRestNet.textContent = 'Unable to connnect to ' + checkedRadio.id
+                } else {
+                    messageRestNet.textContent = 'Successfully Connected to ' + checkedRadio.id
+                }
+
+            }
+        })
+
+    })
+})
+
 // Function to create a radio button for every SSID that is found
 function createRadioElement(name, checked) {
     var radioHtml = '<input type="radio" id="' + name + '" name="wifis"'
@@ -91,7 +124,7 @@ function createRadioElement(name, checked) {
         radioHtml += ' checked="checked"'
     }
     radioHtml += '/><label for="' + name + '">' + name + '</label>'
-    var radioFragment = document.createElement('div')
+    var radioFragment = document.createElement('span')
     radioFragment.innerHTML = radioHtml
     return radioFragment
 }
@@ -105,3 +138,14 @@ function removeDuplicates(array, key) {
         return accumulator;
       }, []);
 }
+
+// Function to check which radio button is checked
+function display() {  
+    var checkRadio = document.querySelector( 
+        'input[name="wifis"]:checked'); 
+      
+    if(checkRadio != null) { 
+      return checkRadio
+    } 
+    return null
+  } 

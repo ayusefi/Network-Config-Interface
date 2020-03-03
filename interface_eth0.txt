@@ -1,2 +1,1 @@
-Interface,IP_Address,Subnet_Mask,MAC_Address,Gateway,DNS_Server,Type
 Eth0,test,test,mac_address,test,test,Wired
