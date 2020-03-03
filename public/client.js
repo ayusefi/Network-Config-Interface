@@ -69,10 +69,10 @@ availwifis.addEventListener('change', function() {
                     messageAvailWifis.textContent = data.error
                 } else {
                     data.forEach(function(value) {
-                        var node = document.createElement("LI");
+                        var radiohtml = createRadioElement(value.ssid, false)
                         var nodetext = document.createTextNode(value.ssid)
-                        node.appendChild(nodetext)
-                        messageAvailWifis.appendChild(document.getElementById("wifi-div").appendChild(node))
+
+                        messageAvailWifis.appendChild(radiohtml)
                     })
 
                 }
@@ -81,3 +81,18 @@ availwifis.addEventListener('change', function() {
     }
 
 })
+
+// Function to create radio button for every found ssid
+function createRadioElement(name, checked) {
+    var radioHtml = '<input type="radio" id="' + name + '" name="wifis"'
+    if ( checked ) {
+        radioHtml += ' checked="checked"'
+    }
+    radioHtml += '/><label>' + name + '</label><br />'
+
+
+    var radioFragment = document.createElement('div')
+    radioFragment.innerHTML = radioHtml
+
+    return radioFragment
+}
