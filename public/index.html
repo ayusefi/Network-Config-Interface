@@ -1,42 +1,51 @@
 <!DOCTYPE html>
 <html>
+
   <head>
     <meta charset="utf-8">
     <title>Network Interfaces</title>
     <link rel="stylesheet" href="/css/styles.css">
   </head>
+
   <body>
     <h1>Network Interfaces</h1>
     <p id="counter"></p>
-    
+
     <table id="ButtonsTable">
-        
         <tr>
           <th>Eth0</th>
           <th>Eth1</th>
         </tr>
         <tr>
           <td>
-            <label>
-            <input type="checkbox" id="eth0-checkbox" onclick="ShowHideDiveth0(this)" />
+            <label class="container">
+            <input type="checkbox" id="eth0-checkbox" onclick="ShowHideDiveth0(this)" /><span class="checkmark"></span>
             Enabled
             </label>
           </td>
           <td>
-            <input type="checkbox" id="eth1-checkbox" onclick="ShowHideDiveth1(this)" />
-            Enabled
+            <label class="container">
+              <input type="checkbox" id="eth1-checkbox" onclick="ShowHideDiveth1(this)" /><span class="checkmark"></span>
+              Enabled
             </label>
+
           </td>
         </tr>
         <tr>
           <td>
             <div id="eth0-dhcp-div" style="display: none">
-              <input type="checkbox" id="eth0-dhcp" onclick="ShowHideDiveth02(this)" checked/>DHCP Active
+              <label class="container">
+                <input type="checkbox" id="eth0-dhcp" onclick="ShowHideDiveth02(this)" checked/><span class="checkmark"></span>
+                DHCP Active
+              </label>
           </div>
           </td>
           <td>
             <div id="eth1-dhcp-div" style="display: none">
-              <input type="checkbox" id="eth1-dhcp" onclick="ShowHideDiveth12(this)" checked/>DHCP Active
+              <label class="container">
+                <input type="checkbox" id="eth1-dhcp" onclick="ShowHideDiveth12(this)" checked/><span class="checkmark"></span>
+                DHCP Active
+              </label>
           </div>
           </td>
         </tr>
@@ -76,7 +85,6 @@
           <td id="message-eth0save" style="color:green"></td>
           <td id="message-eth1save" style="color:green"></td>
         </tr>
-
     </table>
 
     <table>
@@ -85,8 +93,8 @@
       </tr>
       <tr>
         <td>
-          <label>
-          <input type="checkbox" id="wifis-checkbox" onclick="ShowHideDivwifi(this)" />
+          <label class="container">
+          <input type="checkbox" id="wifis-checkbox" onclick="ShowHideDivwifi(this)" /><span class="checkmark"></span>
           Enabled
           </label>
         </td>
@@ -98,8 +106,14 @@
       </tr>
     </table>
 
+    <div>
+      <button>Reset Network</button>
+    </div>
+
   </body>
+
   <script src="client.js"></script>
+
   <script>
     function ShowHideDiveth0(eth0checkbox) {
         var eth0dhcp = document.getElementById("eth0-dhcp-div");
@@ -128,4 +142,5 @@
         availwifi.style.display = wificheckbox.checked ? "block" : "none";
     }
     </script>
+
 </html>

@@ -39,7 +39,6 @@ app.get('/eth0save', (req, res) => {
       error: 'You must provide DNS IP!'
     })
   }
-
   fs.readFile('interfaces.txt', function (err, data) {
     if (err) throw err;
 
@@ -70,13 +69,11 @@ app.get('/eth1save', (req, res) => {
       error: 'You must provide DNS IP!'
     })
   }
-
   fs.readFile('interfaces.txt', function (err, data) {
     if (err) throw err;
 
     fs.appendFileSync('interface_eth1.txt', 'Eth1' + ',' + req.query.ip + ',' + req.query.netmask + ',' + 'mac_address' + ',' + req.query.gateway + ',' + req.query.dns + ',' + 'Wired' + '\n')
   })
-
   res.send({
     IP: req.query.ip
   })

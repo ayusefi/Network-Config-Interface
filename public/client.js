@@ -22,6 +22,7 @@ var messageAvailWifis = document.querySelector('#wifi-div');
 // Button event handler for saving eth0 interface into interface_eth0.txt file
 eth0Form.addEventListener('click', function(e) {
     e.preventDefault()
+
     IP_Address = eth0IP.value
     Net_mask = eth0Netmask.value
     Gateway = eth0Gateway.value
@@ -42,6 +43,7 @@ eth0Form.addEventListener('click', function(e) {
 // Button event handler for saving eth1 interface into interface_eth1.txt file
 eth1Form.addEventListener('click', function(e) {
     e.preventDefault()
+
     IP_Address = eth1IP.value
     Net_mask = eth1Netmask.value
     Gateway = eth1Gateway.value
@@ -60,8 +62,11 @@ eth1Form.addEventListener('click', function(e) {
 })
 
 // Checkbox event handler for listing available wifi networks
-availwifis.addEventListener('change', function() {
+availwifis.addEventListener('change', function(e) {
+    e.preventDefault()
+
     messageAvailWifis.textContent = ''
+
     if (this.checked) {
         fetch('/availwifis').then((response) => {
             response.json().then((data) => {
@@ -70,8 +75,6 @@ availwifis.addEventListener('change', function() {
                 } else {
                     data.forEach(function(value) {
                         var radiohtml = createRadioElement(value.ssid, false)
-                        var nodetext = document.createTextNode(value.ssid)
-
                         messageAvailWifis.appendChild(radiohtml)
                     })
 
@@ -79,20 +82,16 @@ availwifis.addEventListener('change', function() {
             })
         })
     }
-
 })
 
-// Function to create radio button for every found ssid
+// Function to create a radio button for every SSID that is found
 function createRadioElement(name, checked) {
     var radioHtml = '<input type="radio" id="' + name + '" name="wifis"'
     if ( checked ) {
         radioHtml += ' checked="checked"'
     }
     radioHtml += '/><label>' + name + '</label><br />'
-
-
     var radioFragment = document.createElement('div')
     radioFragment.innerHTML = radioHtml
-
     return radioFragment
 }
