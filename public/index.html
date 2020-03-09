@@ -11,10 +11,18 @@
     <h1>Network Config Interface</h1>
     <p id="counter"></p>
 
-    <table id="ButtonsTable">
-        <tr>
-          <th>Eth0</th>
-          <th>Eth1</th>
+    <label class="container">
+      <input type="checkbox" id="interfaces-checkbox" onclick="ShowHideDivIntrfcs(this)" checked/><span class="checkmark"></span>
+      Show Available Interfaces
+    </label>
+
+
+    </div>
+
+    <table id="IntrfcsTable">
+        
+        <tr id="message-interfaces">
+
         </tr>
         <tr>
           <td>
@@ -105,6 +113,9 @@
         </td>
       </tr>
     </table>
+    <div class="wifipassdiv">
+      <label>Password: </label><input type="text" id="wifipass" /><br>
+    </div>
 
     <div>
       <button id="ResetButton">Restart Network</button>
@@ -117,6 +128,11 @@
   <script src="client.js"></script>
 
   <script>
+    function ShowHideDivIntrfcs(intrfcscheckbox) {
+      var intrfcsdeactive = document.getElementById("IntrfcsTable");
+      intrfcsdeactive.style.display = intrfcscheckbox.checked ? "block" : "none";
+    }
+
     function ShowHideDiveth0(eth0checkbox) {
         var eth0dhcp = document.getElementById("eth0-dhcp-div");
         eth0dhcp.style.display = eth0checkbox.checked ? "block" : "none";

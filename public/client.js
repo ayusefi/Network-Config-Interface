@@ -1,4 +1,8 @@
 
+// Variable for Interfaces checkbox
+const interfacesChkbx = document.querySelector('#interfaces-checkbox')
+const messageInterfaces = document.querySelector('#message-interfaces')
+
 // Variables for eth0 interface
 const eth0Form = document.querySelector('#eth0form');
 const eth0IP = document.querySelector('#eth0-ip-address')
@@ -22,6 +26,30 @@ var messageAvailWifis = document.querySelector('#wifi-div');
 // Variables for Restaring Network
 const restButton = document.querySelector("#ResetButton")
 const messageRestNet = document.querySelector('#message-restNet')
+const wifiPassword = document.querySelector("#wifipass")
+
+// Checkbox event handler for listing available network interfaces
+interfacesChkbx.addEventListener('change', function(e) {
+    e.preventDefault()
+
+    messageInterfaces.textContent = ''
+    if (this.checked) {
+        fetch('/interfaces').then((response) => {
+            response.json().then((data) => {
+                if (data.error) {
+                    messageInterfaces.textContent = data.error
+                } else {
+                    availInterfaces = Object.keys(data)
+                    console.log(availInterfaces)
+                    availInterfaces.forEach(function(value) {
+                        var interfacehtml = createInterfaceForm(value)
+                        messageInterfaces.appendChild(interfacehtml)
+                    })
+                }
+            })
+        })
+    }
+})
 
 // Button event handler for saving eth0 interface into interface_eth0.txt file
 eth0Form.addEventListener('click', function(e) {
@@ -77,6 +105,7 @@ availwifis.addEventListener('change', function(e) {
                     messageAvailWifis.textContent = data.error
                 } else {
                     data = removeDuplicates(data, 'ssid')
+                    console.log(data)
                     data.forEach(function(value) {
                         var radiohtml = createRadioElement(value.ssid, false)
                         messageAvailWifis.appendChild(radiohtml)
@@ -92,15 +121,15 @@ availwifis.addEventListener('change', function(e) {
 restButton.addEventListener('click', function(e) {
     e.preventDefault()
 
+    const wifiPasswordValue = wifiPassword.value
     messageRestNet.textContent = ''
-
     const checkedRadio = display()
 
     if (checkedRadio == null) {
         messageRestNet.textContent = 'You must choose a network!'
     }
 
-    fetch('/restNet?ssid=' + checkedRadio.id).then((response) => {
+    fetch('/restNet?ssid=' + checkedRadio.id + '&pass=' + wifiPasswordValue).then((response) => {
         response.json().then((data) => {
             if (data.error) {
                 messageRestNet.textContent = data.error
@@ -116,6 +145,16 @@ restButton.addEventListener('click', function(e) {
 
     })
 })
+
+// Function to create a form for every interface that is found
+function createInterfaceForm(name) {
+    var interfaceHtml = '<th id="' + name + '" '
+
+    interfaceHtml += '>' + name + '</th>'
+    var interfaceFragment = document.createElement('th')
+    interfaceFragment.innerHTML = interfaceHtml
+    return interfaceFragment
+}
 
 // Function to create a radio button for every SSID that is found
 function createRadioElement(name, checked) {

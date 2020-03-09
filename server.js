@@ -1,6 +1,6 @@
 
 // Import needed modules
-const network = require('network');
+const os = require('os')
 const express = require('express');
 const fs = require('fs');
 const scanner = require('node-wifi-scanner');
@@ -21,6 +21,11 @@ app.listen(8080, () => {
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
+
+app.get('/interfaces', (req, res) => {
+  interfaces = os.networkInterfaces()
+  res.send(interfaces)
+})
 
 // Save eth0 to interface_eth0.txt file
 app.get('/eth0save', (req, res) => {
@@ -98,9 +103,13 @@ app.get('/restNet', (req, res) => {
     return res.send({
       error: 'You must choose a network!'
     })
+  } else if(!req.query.pass) {
+    return res.send({
+      error: 'You must enter password!'
+    })
   }
   cmd.get(
-    'nmcli d wifi connect ' + req.query.ssid + ' password 81eedaf3CC',
+    'nmcli d wifi connect ' + req.query.ssid + ' password ' + req.query.pass,
     function(err, data, stderr){
       console.log(data)
       res.send({
