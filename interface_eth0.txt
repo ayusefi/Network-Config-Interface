@@ -1,1 +1,0 @@
-Eth0,test,test,mac_address,test,test,Wired
