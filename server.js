@@ -13,7 +13,7 @@ const cmd = require('node-cmd');
 app.use(express.static('public'));
 
 // start the express web server listening on 8080
-app.listen(3000, () => {
+app.listen(8080, () => {
   console.log('listening on 8080');
 });
 
@@ -112,7 +112,6 @@ app.get('/restNet', (req, res) => {
     // set_ip_address.configure([intrfc]).then(() => console.log('done writing config files'))
     console.log(intrfc)
   })
-
   cmd.get(
     'nmcli d wifi connect ' + req.query.ssid + ' password ' + req.query.pass,
     function(err, data, stderr){
