@@ -7,9 +7,7 @@ const fs = require('fs');
 const scanner = require('node-wifi-scanner');
 var set_ip_address = require('set-ip-address')
 const app = express();
-
 const cmd = require('node-cmd');
-
 
 // serve files from the public directory
 app.use(express.static('public'));
@@ -26,20 +24,12 @@ app.get('/', (req, res) => {
 
 app.get('/interfaces', (req, res) => {
   network.get_interfaces_list(function(err, list) {
-
     if (err) {
         return res.send({err})
     }
-
     res.send(list)
-
   })
 })
-
-// app.get('/interfaces', (req, res) => {
-//   interfaces = os.networkInterfaces()
-//   res.send(interfaces)
-// })
 
 // Save eth0 to interface_eth0.txt file
 app.get('/intrfcsave', (req, res) => {
@@ -76,51 +66,10 @@ app.get('/intrfcsave', (req, res) => {
  
     console.log("JSON file has been saved.");
   })
-
   res.send({
     IP: req.query.ip
   })
 })
-
-// // Save eth1 data into interface_eth1.txt file!
-// app.get('/eth1save', (req, res) => {
-//   if (!req.query.ip) {
-//     return res.send({
-//       error: 'You must provide IP address!'
-//     })
-//   } else if(!req.query.netmask) {
-//     return res.send({
-//       error: 'You must provide Netmask!'
-//     })
-//   } else if(!req.query.gateway) {
-//     return res.send({
-//       error: 'You must provide Gateway!'
-//     })
-//   } else if(!req.query.dns) {
-//     return res.send({
-//       error: 'You must provide DNS IP!'
-//     })
-//   }
-//   const wlo1Object = {
-//     name: 'wlo1',
-//     ipaddress: req.query.ip,
-//     netmask: req.query.netmask,
-//     gateway: req.query.gateway,
-//     dns: req.query.dns,
-//   }
-//   var jsonContent = JSON.stringify(wlo1Object);
-//   fs.writeFile("interface_wlo1.json", jsonContent, 'utf8', function (err) {
-//     if (err) {
-//         console.log("An error occured while writing JSON Object to File.");
-//         return console.log(err);
-//     }
- 
-//     console.log("JSON file has been saved.");
-//   })
-//   res.send({
-//     IP: req.query.ip
-//   })
-// })
 
 // List available Wifi networks
 app.get('/availwifis', (req, res) => {
@@ -173,14 +122,5 @@ app.get('/restNet', (req, res) => {
       })
     }
   );
-
-  // var wlo1Objectraw = fs.readFileSync('interface_wlo1.json')
-  // var wlo1Object = JSON.parse(wlo1Objectraw)
-  // var wlo1 = {
-  //   interface: wlo1Object.name,
-  //   dhcp: true
-  // }
-
-
 })
 
