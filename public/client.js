@@ -26,10 +26,8 @@ interfacesChkbx.addEventListener('change', function(e) {
                     messageInterfaces.textContent = data.error
                 } else {
                     data.forEach(function(value) {
-
                         var interfacehtml = createInterfaceTable(value.name,value.ip_address, value.netmask, value.gateway_ip, value.mac_address)
                         messageInterfaces.appendChild(interfacehtml)
-                        
                     })
                 }
             })
@@ -85,8 +83,6 @@ availwifis.addEventListener('change', function(e) {
                         messageConnectedWifi.textContent = 'No Wifi connected currently!' 
 
                     }
-
-
                     data = removeDuplicates(data.availnetworks, 'ssid')
                     data.forEach(function(value) {
                         var radiohtml = createRadioElement(value.ssid, false)
@@ -95,10 +91,8 @@ availwifis.addEventListener('change', function(e) {
                 }
             })
         })
-
     }
     messageConnectedWifi.textContent = ''
-
 })
 
 // Button event handler for restarting network by given config information
@@ -146,11 +140,11 @@ restButton.addEventListener('click', function(e) {
 function createInterfaceTable(name, IPAddress, netmask, gateway, macaddress) {
     var interfaceHtml = '<div  class="interfaces-class" id="' + name + '-intrfc-name" '
     interfaceHtml += '>' + name + '</div><br>'
-    interfaceHtml += '<div><label>IP Address:</label><input type="text" id="' + name + '-intrfc-IP" value="' + IPAddress + '"></input></div><br>'
-    interfaceHtml += '<div><label>Netmask:</label><input type="text" id="' + name + '-intrfc-Netmask" value="' + netmask + '"></input></div><br>'
-    interfaceHtml += '<div><label>Gateway:</label><input type="text" id="' + name + '-intrfc-Gateway" value="' + gateway + '"></input></div><br>'
-    interfaceHtml += '<div><label>DNS:</label><input type="text" id="' + name + '-intrfc-DNS"></input></div><br>'
-    interfaceHtml += '<div><label>MAC Address:</label><input type="text" id="' + name + '-intrfc-MAC" value="' + macaddress + '"></input></div>'
+    interfaceHtml += '<div><label>IP Address:</label><input type="text" id="' + name + '-intrfc-IP" value="' + IPAddress + '" placeholder="IP Address" required></input></div><br>'
+    interfaceHtml += '<div><label>Netmask:</label><input type="text" id="' + name + '-intrfc-Netmask" value="' + netmask + '" placeholder="Subnet Mask" required></input></div><br>'
+    interfaceHtml += '<div><label>Gateway:</label><input type="text" id="' + name + '-intrfc-Gateway" value="' + gateway + '" placeholder="Gateway Address" required></input></div><br>'
+    interfaceHtml += '<div><label>DNS:</label><input type="text" id="' + name + '-intrfc-DNS" placeholder="DNS Address" required></input></div><br>'
+    interfaceHtml += '<div><label>MAC Address:</label><input type="text" id="' + name + '-intrfc-MAC" value="' + macaddress + '" readonly></input></div>'
     var interfaceFragment = document.createElement('td')
     interfaceFragment.innerHTML = interfaceHtml
     return interfaceFragment
@@ -182,9 +176,22 @@ function removeDuplicates(array, key) {
 function display() {  
     var checkRadio = document.querySelector( 
         'input[name="wifis"]:checked'); 
-      
     if(checkRadio != null) { 
       return checkRadio
     } 
     return null
-  } 
+} 
+
+// Function to show/hide interfaces by checking/unchecking the Enabled button
+function ShowHideDivIntrfcs(intrfcscheckbox) {
+    var intrfcsdeactive = document.getElementById("IntrfcsTable");
+    intrfcsdeactive.style.display = intrfcscheckbox.checked ? "block" : "none";
+}
+
+// Function to show/hide available wifi networks by checking/unchecking Enabled button
+function ShowHideDivwifi(wificheckbox) {
+    var availwifi = document.getElementById("wifi-div");
+    var passinput = document.getElementById("pass-input")
+    passinput.style.display = wificheckbox.checked ? "block" : "none";
+    availwifi.style.display = wificheckbox.checked ? "block" : "none";
+}

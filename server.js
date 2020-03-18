@@ -1,6 +1,6 @@
 
 // Import needed modules
-const os = require('os')
+// const os = require('os')
 const network = require('network');
 const express = require('express');
 const fs = require('fs');
@@ -8,8 +8,6 @@ const scanner = require('node-wifi-scanner');
 var set_ip_address = require('set-ip-address')
 const app = express();
 const cmd = require('node-cmd');
-
-
 
 // serve files from the public directory
 app.use(express.static('public'));
@@ -24,6 +22,7 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
+// Serves a list of available network interfaces
 app.get('/interfaces', (req, res) => {
   network.get_interfaces_list(function(err, list) {
     if (err) {
@@ -33,7 +32,7 @@ app.get('/interfaces', (req, res) => {
   })
 })
 
-// Save eth0 to interface_eth0.txt file
+// Save avialable interfaces info to txt files
 app.get('/intrfcsave', (req, res) => {
   if (!req.query.ip) {
     return res.send({

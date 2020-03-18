@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
   <head>
     <meta charset="utf-8">
     <title>Network Configuration Interface</title>
@@ -9,27 +8,29 @@
 
   <body>
     <h1 class="header">Network Config Interface</h1>
+
     <p id="counter"></p>
+
     <table>
       <tr>
         <th>Available Connected Interfaces</th>
       </tr>
+      <tr>
+        <td>
+          <label class="container">
+            <input type="checkbox" id="interfaces-checkbox" onclick="ShowHideDivIntrfcs(this)" /><span class="checkmark"></span>
+            Enabled
+          </label>
+        </td>
+      </tr>
     </table>
-    <label class="container">
-      <input type="checkbox" id="interfaces-checkbox" onclick="ShowHideDivIntrfcs(this)" /><span class="checkmark"></span>
-      Enabled
-    </label>
-
-
-
 
     <table class="interfaces-table" id="IntrfcsTable" style="display: none;">
       <tr id="message-interfaces"></tr>
       <tr><td><button id="saveButton">Save all to files</button></td></tr>
-      <tr><td id="message-intrfcssave" style="color:green"></td></tr>
+      <tr><td id="message-intrfcssave" style="color:green"><p></p></td></tr>
     </table>
-    <p></p>
-
+    
     <table>
       <tr>
         <th>Available Wifi Networks</th>
@@ -47,7 +48,6 @@
           <div class="radio-toolbar" id="wifi-div" style="display: none"></div>
         </td>
       </tr>
-
       <tr>
         <td id="pass-input" style="display: none">
             <label>Password: </label><input type="password" id="wifipass" style="width: 30%;" required /><br>
@@ -55,55 +55,18 @@
       </tr>
       <tr>
         <td>
-          <div id="message-connectedWifi" style="font-style: oblique; font-weight: bold; padding-top: 30px;"></div>
-
+          <div class="class-connectedWifi" id="message-connectedWifi"></div>
         </td>
       </tr>
     </table>
-    
 
     <div>
       <button id="ResetButton">Restart Network</button>
     </div>
-    <p class="class-restNet" id="message-restNet"></p>
 
+    <p class="class-restNet" id="message-restNet"></p>
   </body>
 
   <!-- Scripts -->
   <script src="client.js"></script>
-
-  <script>
-    function ShowHideDivIntrfcs(intrfcscheckbox) {
-      var intrfcsdeactive = document.getElementById("IntrfcsTable");
-      intrfcsdeactive.style.display = intrfcscheckbox.checked ? "block" : "none";
-    }
-
-    function ShowHideDiveth0(eth0checkbox) {
-        var eth0dhcp = document.getElementById("eth0-dhcp-div");
-        eth0dhcp.style.display = eth0checkbox.checked ? "block" : "none";
-    }
-
-    function ShowHideDiveth1(eth1checkbox) {
-        var eth1dhcp = document.getElementById("eth1-dhcp-div");
-        eth1dhcp.style.display = eth1checkbox.checked ? "block" : "none";
-    }
-
-    function ShowHideDiveth02(eth0dhcpcheckbox) {
-      var eth0dhcpdeactive = document.getElementById("eth0-dhcp-deactive-div");
-      eth0dhcpdeactive.style.display = eth0dhcpcheckbox.checked ? "none" : "block";
-    }
-
-    function ShowHideDiveth12(eth1dhcpcheckbox) {
-      var eth1dhcpdeactive = document.getElementById("eth1-dhcp-deactive-div");
-      eth1dhcpdeactive.style.display = eth1dhcpcheckbox.checked ? "none" : "block";
-    }
-
-    function ShowHideDivwifi(wificheckbox) {
-        var availwifi = document.getElementById("wifi-div");
-        var passinput = document.getElementById("pass-input")
-        passinput.style.display = wificheckbox.checked ? "block" : "none";
-        availwifi.style.display = wificheckbox.checked ? "block" : "none";
-    }
-    </script>
-
 </html>
