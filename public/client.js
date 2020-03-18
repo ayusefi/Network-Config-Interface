@@ -53,9 +53,9 @@ intrfcsButton.addEventListener('click', function(e) {
                     fetch('/intrfcsave?name=' + value.name + '&ip=' + messageIntrfcIP.value + '&netmask=' + messageIntrfcNetmask.value + '&gateway=' + messageGateway.value + '&dns=' + messageDNS.value).then((response) => {
                         response.json().then((data) => {
                             if (data.error) {
-                                messageIntrfcsSave.textContent = data.error
+                                messageIntrfcsSave.innerHTML += '<div style="color: red;" >' + data.error + ' for Interface <span style="font-weight: bold;">' + value.name + '</span></div><br>'
                             } else {
-                                messageIntrfcsSave.textContent = 'Information saved to file!'
+                                messageIntrfcsSave.innerHTML += 'Information of Interface <span style="font-weight: bold;">' + value.name + '</span> saved! <br>'
                             }
                         })
                     })
@@ -78,7 +78,7 @@ availwifis.addEventListener('change', function(e) {
                 } else {
                     messageAvailWifis.textContent = ''
                     if (data.connectedwirelss !== '') {
-                        messageConnectedWifi.textContent = 'Currently connected Wifi is ' + data.connectedwirelss
+                        messageConnectedWifi.innerHTML = 'Currently connected Wifi: <span style="font-weight: bold;">' + data.connectedwirelss + '</span>'
                     } else {
                         messageConnectedWifi.textContent = 'No Wifi connected currently!' 
 

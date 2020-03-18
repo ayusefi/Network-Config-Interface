@@ -34,21 +34,21 @@ app.get('/interfaces', (req, res) => {
 
 // Save avialable interfaces info to txt files
 app.get('/intrfcsave', (req, res) => {
-  if (!req.query.ip) {
+  if (!req.query.ip || ValidateIPaddress(req.query.ip) === false) {
     return res.send({
-      error: 'You must provide IP address!'
+      error: 'Please enter valid IP address'
     })
-  } else if(!req.query.netmask) {
+  } else if(!req.query.netmask || ValidateIPaddress(req.query.netmask) === false) {
     return res.send({
-      error: 'You must provide Netmask!'
+      error: 'Please enter valid Netmask'
     })
-  } else if(!req.query.gateway) {
+  } else if(!req.query.gateway || ValidateIPaddress(req.query.gateway) === false) {
     return res.send({
-      error: 'You must provide Gateway!'
+      error: 'Please enter valid Gateway'
     })
-  } else if(!req.query.dns) {
+  } else if(!req.query.dns || ValidateIPaddress(req.query.dns) === false) {
     return res.send({
-      error: 'You must provide DNS IP!'
+      error: 'Please enter valid DNS IP'
     })
   }
   const intrfcObject = {
@@ -146,3 +146,12 @@ app.get('/restNet', (req, res) => {
   );
 })
 
+// Function to validate entered inputs of interfaces
+function ValidateIPaddress(ipaddresss) 
+{
+ if (/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(ipaddresss))
+  {
+    return (true)
+  }
+return (false)
+}
