@@ -9,6 +9,8 @@ var set_ip_address = require('set-ip-address')
 const app = express();
 const cmd = require('node-cmd');
 
+
+
 // serve files from the public directory
 app.use(express.static('public'));
 
@@ -73,13 +75,23 @@ app.get('/intrfcsave', (req, res) => {
 
 // List available Wifi networks
 app.get('/availwifis', (req, res) => {
+  
   scanner.scan((err, networks) => {
     if (err) {
       console.error(err);
       return res.send(err)
     }
-    res.send(networks)
+    res.send({
+      availnetworks: networks,
+      connectedwirelss: global.connectedWifi
+    })
   });
+  cmd.get(
+    'iwgetid -r',
+     function(err, data, stderr){
+        global.connectedWifi = data
+      }
+  )
 })
 
 // Restart Network with given configuration
@@ -109,11 +121,23 @@ app.get('/restNet', (req, res) => {
       gateway: intrfcObject.gateway,
       nameservers: [intrfcObject.dns]
     }
-    // set_ip_address.configure([intrfc]).then(() => console.log('done writing config files'))
-    console.log(intrfc)
+   // set_ip_address.configure([intrfc]).then(() => console.log('done writing config files'))
   })
   cmd.get(
-    'nmcli d wifi connect ' + req.query.ssid + ' password ' + req.query.pass,
+                'ifconfig wlan0 down ',
+                function(err, data, stderr){
+                        console.log(data)
+                }
+        );
+  cmd.get(
+                'ifconfig wlan0 up',
+                 function(err, data, stderr){
+                        console.log(data)
+                }
+        );
+
+  cmd.get(
+    'nmcli -w 10 d wifi connect ' + req.query.ssid + ' password ' + req.query.pass,
     function(err, data, stderr){
       console.log(data)
       res.send({

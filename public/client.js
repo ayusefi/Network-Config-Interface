@@ -7,7 +7,8 @@ const messageIntrfcsSave = document.querySelector('#message-intrfcssave')
 
 // Variables for listing avaialable wifi networks
 const availwifis = document.querySelector('#wifis-checkbox')
-var messageAvailWifis = document.querySelector('#wifi-div');
+var messageAvailWifis = document.querySelector('#wifi-div')
+var messageConnectedWifi = document.querySelector('#message-connectedWifi')
 
 // Variables for Restaring Network
 const restButton = document.querySelector("#ResetButton")
@@ -71,13 +72,22 @@ availwifis.addEventListener('change', function(e) {
     e.preventDefault()
     if (this.checked) {
         messageAvailWifis.textContent = 'loading...'
+
         fetch('/availwifis').then((response) => {
             response.json().then((data) => {
                 if (data.error) {
                     messageAvailWifis.textContent = data.error
                 } else {
                     messageAvailWifis.textContent = ''
-                    data = removeDuplicates(data, 'ssid')
+                    if (data.connectedwirelss !== '') {
+                        messageConnectedWifi.textContent = 'Currently connected Wifi is ' + data.connectedwirelss
+                    } else {
+                        messageConnectedWifi.textContent = 'No Wifi connected currently!' 
+
+                    }
+
+
+                    data = removeDuplicates(data.availnetworks, 'ssid')
                     data.forEach(function(value) {
                         var radiohtml = createRadioElement(value.ssid, false)
                         messageAvailWifis.appendChild(radiohtml)
@@ -85,7 +95,10 @@ availwifis.addEventListener('change', function(e) {
                 }
             })
         })
+
     }
+    messageConnectedWifi.textContent = ''
+
 })
 
 // Button event handler for restarting network by given config information
@@ -93,7 +106,10 @@ restButton.addEventListener('click', function(e) {
     e.preventDefault()
     const wifiPasswordValue = wifiPassword.value
     const availableInterfaces = window.test
+    messageConnectedWifi.textContent = ''
+
     messageRestNet.textContent = ''
+    messageRestNet.textContent = 'Connecting...'
     const checkedRadio = display()
     if (checkedRadio == null) {
         messageRestNet.textContent = 'You must choose a network!'
